@@ -5,6 +5,7 @@ setup(
     version='1.0.0',
     description='django cluster redis',
     long_description='This is an AWS ElasticCache (or similar cluster) adapter for django redis',
+    keywords='django cluster redis aws elasticcache',
     url='https://github.com/deforestg/django-cluster-redis',
     author='Gabriel de Forest',
     packages=find_packages(exclude=['test']),
