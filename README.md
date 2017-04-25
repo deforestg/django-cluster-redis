@@ -23,7 +23,7 @@ CACHES = {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'YOUR REDIS CLUSTER HERE',
         'OPTIONS': {
-            'REDIS_CLIENT_CLASS': 'django_cluster_cache.cache.ClusterRedis',
+            'REDIS_CLIENT_CLASS': 'django_cluster_redis.cache.ClusterRedis',
         }
     }
 }
