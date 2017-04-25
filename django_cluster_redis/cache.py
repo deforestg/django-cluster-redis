@@ -1,0 +1,75 @@
+from redis.client import StrictRedis
+from redis.exceptions import ResponseError
+
+
+class ClusterRedis(StrictRedis):
+    def _action(self, action_type, *args, **kwargs):
+        method = getattr(super(ClusterRedis, self), action_type)
+        try:
+            return method(*args, **kwargs)
+        except ResponseError as e:
+            msg = str(e)
+            if 'MOVED' not in msg:
+                raise e
+
+            # parse out the address
+            host = msg.rsplit(' ')[2].rsplit(':')[0]
+
+            self._follow_redirect(host)
+
+            return method(*args, **kwargs)
+
+    def _follow_redirect(self, host):
+        pool = self.connection_pool
+
+        pool.connection_kwargs['host'] = host
+        available_connections = pool._available_connections
+        # find existing connection to reuse - redis always pops off the last connection
+        connection = [c for c in available_connections if c.host == host]
+
+        if connection:
+            connection = connection[0]
+            available_connections.remove(connection)
+        else:
+            connection = pool.make_connection()
+
+        available_connections.append(connection)
+
+    def get(self, *args, **kwargs):
+        return self._action('get', *args, **kwargs)
+
+    def set(self, *args, **kwargs):
+        return self._action('set', *args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        return self._action('delete', *args, **kwargs)
+
+    def exists(self, *args, **kwargs):
+        return self._action('exists', *args, **kwargs)
+
+    def dump(self, *args, **kwargs):
+        return self._action('dump', *args, **kwargs)
+
+    def expire(self, *args, **kwargs):
+        return self._action('expire', *args, **kwargs)
+
+    def move(self, *args, **kwargs):
+        return self._action('move', *args, **kwargs)
+
+    def decr(self, *args, **kwargs):
+        return self._action('decr', *args, **kwargs)
+
+    def flushall(self, *args, **kwargs):
+        return self._action('flushall', *args, **kwargs)
+
+    def flushdb(self, *args, **kwargs):
+        return self._action('flushdb', *args, **kwargs)
+
+    def ttl(self, *args, **kwargs):
+        return self._action('ttl', *args, **kwargs)
+
+    def type(self, *args, **kwargs):
+        return self._action('type', *args, **kwargs)
+
+    def rename(self, *args, **kwargs):
+        return self._action('rename', *args, **kwargs)
