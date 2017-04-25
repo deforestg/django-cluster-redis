@@ -73,3 +73,39 @@ class ClusterRedis(StrictRedis):
 
     def rename(self, *args, **kwargs):
         return self._action('rename', *args, **kwargs)
+
+    def keys(self, *args, **kwargs):
+        return self._action('keys', *args, **kwargs)
+
+    def mget(self, *args, **kwargs):
+        return self._action('mget', *args, **kwargs)
+
+    def mset(self, *args, **kwargs):
+        return self._action('mset', *args, **kwargs)
+
+    def msetnx(self, *args, **kwargs):
+        return self._action('msetnx', *args, **kwargs)
+
+    def persist(self, *args, **kwargs):
+        return self._action('persist', *args, **kwargs)
+
+    def pexpire(self, *args, **kwargs):
+        return self._action('pexpire', *args, **kwargs)
+
+    def pexpireat(self, *args, **kwargs):
+        return self._action('pexpireat', *args, **kwargs)
+
+    def psetex(self, *args, **kwargs):
+        return self._action('psetex', *args, **kwargs)
+
+    def pttl(self, *args, **kwargs):
+        return self._action('pttl', *args, **kwargs)
+
+    def randomkey(self, *args, **kwargs):
+        return self._action('randomkey', *args, **kwargs)
+
+    def renamenx(self, *args, **kwargs):
+        return self._action('renamenx', *args, **kwargs)
+
+    def restore(self, *args, **kwargs):
+        return self._action('restore', *args, **kwargs)

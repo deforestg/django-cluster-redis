@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-cluster-redis',
-    version='1.0.1',
+    version='1.0.2',
     description='django cluster redis',
     long_description='This is an AWS ElasticCache (or similar cluster) adapter for django redis',
     keywords='django cluster redis aws elasticcache',
