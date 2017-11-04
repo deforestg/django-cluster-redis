@@ -118,3 +118,6 @@ class ClusterRedis(StrictRedis):
 
     def lrange(self, *args, **kwargs): 
         return self._action('lrange', *args, **kwargs)
+
+    def lpush(self, *args, **kwargs): 
+        return self._action('lpush', *args, **kwargs)
