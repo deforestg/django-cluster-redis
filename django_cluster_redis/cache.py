@@ -15,7 +15,7 @@ class ClusterRedis(StrictRedis):
             # parse out the address and port number
             msg_split = msg.rsplit(' ')[2].rsplit(":")
             host = msg_split[0]
-            port = msg.split[1]
+            port = msg_split[1]
            
             self._follow_redirect(host, port)
 
