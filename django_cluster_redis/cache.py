@@ -12,20 +12,24 @@ class ClusterRedis(StrictRedis):
             if 'MOVED' not in msg:
                 raise e
 
-            # parse out the address
-            host = msg.rsplit(' ')[2].rsplit(':')[0]
-
-            self._follow_redirect(host)
+            # parse out the address and port number
+            msg_split = msg.rsplit(' ')[2].rsplit(":")
+            host = msg_split[0]
+            port = msg_split[1]
+           
+            self._follow_redirect(host, port)
 
             return method(*args, **kwargs)
 
-    def _follow_redirect(self, host):
+    def _follow_redirect(self, host, port):
         pool = self.connection_pool
 
         pool.connection_kwargs['host'] = host
+        pool.connection_kwargs['port'] = port
         available_connections = pool._available_connections
+
         # find existing connection to reuse - redis always pops off the last connection
-        connection = [c for c in available_connections if c.host == host]
+        connection = [c for c in available_connections if c.host == host and c.port == int(port)]
 
         if connection:
             connection = connection[0]
@@ -112,3 +116,9 @@ class ClusterRedis(StrictRedis):
 
     def restore(self, *args, **kwargs):
         return self._action('restore', *args, **kwargs)
+
+    def lrange(self, *args, **kwargs): 
+        return self._action('lrange', *args, **kwargs)
+
+    def lpush(self, *args, **kwargs): 
+        return self._action('lpush', *args, **kwargs)
