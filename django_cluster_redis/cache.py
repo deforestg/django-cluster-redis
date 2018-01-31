@@ -51,6 +51,9 @@ class ClusterRedis(StrictRedis):
     def delete_many(self, *args, **kwargs):
         return self._action('delete_many', *args, **kwargs)
 
+    def delete_pattern(self, *args, **kwargs):
+        return self._action('delete_pattern', *args, **kwargs)
+
     def exists(self, *args, **kwargs):
         return self._action('exists', *args, **kwargs)
 
