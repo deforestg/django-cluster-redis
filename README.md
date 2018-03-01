@@ -1,6 +1,3 @@
-# DEPRECATED - use this methodology http://tech.nickserra.com/2017/07/26/django-redis-aws-elasticache-primaryreplica-cluster/
-
-
 # django-cluster-redis
 - Supports AWS ElasticCache and any other similar style redis.
 - The breaking difference in functionality is that ElasticCache often returns "MOVED 9134 {ip}:6379" with an ip address that you need to follow.
@@ -24,7 +21,9 @@ pip install django-cluster-redis
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'YOUR REDIS CLUSTER HERE',
+        'LOCATION': [
+            'YOUR REDIS CLUSTER NODES HERE',
+         ],
         'OPTIONS': {
             'REDIS_CLIENT_CLASS': 'django_cluster_redis.cache.ClusterRedis',
         }
