@@ -2,6 +2,7 @@
 
 Use this: https://github.com/Grokzen/redis-py-cluster
 
+```
 CACHES = {
   'default': {
     'BACKEND': 'django_redis.cache.RedisCache',
@@ -15,7 +16,7 @@ CACHES = {
     }
   }
 }
-
+```
 
 
 
